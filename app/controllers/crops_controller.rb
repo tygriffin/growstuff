@@ -104,6 +104,7 @@ class CropsController < ApplicationController
   def create
     params[:crop][:creator_id] = current_member.id
     @crop = Crop.new(params[:crop])
+    @crop.approved = false unless current_member.has_role?("Crop Wrangler") || current_member.has_role?("Admin")
 
     respond_to do |format|
       if @crop.save
