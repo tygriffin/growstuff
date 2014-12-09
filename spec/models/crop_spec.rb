@@ -52,6 +52,15 @@ describe Crop do
     end
   end
 
+  context "approval" do
+    let!(:pending) { FactoryGirl.create(:crop, approved: false) }
+
+    it "pending approval scope returns only unapproved crops" do
+      expect(Crop.pending_approval.first.approved).to be(false)
+      expect(Crop.pending_approval.length).to eq(1)
+    end
+  end
+
   context 'popularity' do
     before (:each) do
       @tomato = FactoryGirl.create(:tomato)

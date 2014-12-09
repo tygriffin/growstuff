@@ -22,11 +22,12 @@ class Crop < ActiveRecord::Base
   before_destroy {|crop| crop.posts.clear}
 
 
-  default_scope order("lower(name) asc")
-  scope :recent, reorder("created_at desc")
-  scope :toplevel, where(:parent_id => nil)
-  scope :popular, reorder("plantings_count desc, lower(name) asc")
-  scope :randomized, reorder('random()') # ok on sqlite and psql, but not on mysql
+  default_scope where(approved: true).order("lower(name) asc")
+  scope :pending_approval, where(approved: false)
+  scope :recent, where(approved: true).reorder("created_at desc")
+  scope :toplevel, where(approved: true).where(:parent_id => nil)
+  scope :popular, where(approved: true).reorder("plantings_count desc, lower(name) asc")
+  scope :randomized, where(approved: true).reorder('random()') # ok on sqlite and psql, but not on mysql
 
   validates :en_wikipedia_url,
     :format => {

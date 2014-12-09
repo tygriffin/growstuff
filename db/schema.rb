@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141119130555) do
+ActiveRecord::Schema.define(:version => 20141209074953) do
 
   create_table "account_types", :force => true do |t|
     t.string   "name",              :null => false
@@ -59,14 +59,15 @@ ActiveRecord::Schema.define(:version => 20141119130555) do
   end
 
   create_table "crops", :force => true do |t|
-    t.string   "name",                            :null => false
+    t.string   "name",                               :null => false
     t.string   "en_wikipedia_url"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "slug"
     t.integer  "parent_id"
     t.integer  "plantings_count",  :default => 0
     t.integer  "creator_id"
+    t.boolean  "approved",         :default => true
   end
 
   add_index "crops", ["name"], :name => "index_crops_on_name"
